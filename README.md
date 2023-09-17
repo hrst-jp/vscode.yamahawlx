@@ -1,4 +1,4 @@
-# yamaha-rt README
+# yamaha-WLX README
 YAMAHA ルーターの設定ファイルをハイライト表示します。
 
 # お知らせ
@@ -9,20 +9,9 @@ YAMAHA ルーターの設定ファイルをハイライト表示します。
 
 # 使用方法
 Show Configで表示された結果をコメントを含め保存して下さい。  
-拡張子は ".rtx",　".nvr", ".wlx"を指定しています。
+拡張子は ".wlx"を指定しています。
 
 # 現在の対応製品
-RTX5000/RTX3510/RTX3500  
-RTX1300  
-RTX1220/RTX1210  
-RTX830/RTX810  
-# 旧コマンドリファレンス
-RTX3000/RTX1500/RTX1100  
-RTX1200  
-RT250i/RT107e  
-SRT100  
-# 一部対応製品
-NVR700W/NVR510  
 WLX  
 
 #その他

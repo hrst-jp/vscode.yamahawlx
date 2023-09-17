@@ -6,7 +6,7 @@
   "publisher": "hrst",
   "icon": "images/wlx413_icon.png",
   "engines": {
-    "vscode": "^1.16.0"
+    "vscode": "^1.82.0"
   },
   "categories": [
     "Programming Languages"
@@ -28,10 +28,9 @@
       {
         "language": "yamahawlx",
         "scopeName": "text.yamahawlx",
-        "path": "./syntaxes/wlx-common.tmLanguage.json"
+        "path": "./syntaxes/yamahawlx.tmLanguage.json"
       }
     ]
-  
   },
   "repository": {
     "type": "git",
