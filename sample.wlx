@@ -1,0 +1,131 @@
+# wlx402 Rev17
+cluster config-id (個別のID番号：自動設定)
+administrator password encrypted (パスワード※：必須) ※暗号化されて表示されます。
+vlan-port-mode lan1:1 hybrid
+vlan-id 1 1
+vlan-id 2 20
+vlan-id 3 30
+vlan-id 4 40
+vlan-access lan1:1 1
+vlan-trunk lan1:1 2 join
+vlan-trunk lan1:1 3 join
+vlan-trunk lan1:1 4 join
+ip vlan-id 1 address 192.168.1.202/24
+ip route default gateway 192.168.1.1
+airlink optimization use on prefer-mode=general 03:01
+airlink select module1
+ airlink mode 11b+g+n+ax
+ airlink channel auto bandwidth=40 primary=lower
+ airlink beacon dtim-period 1
+ airlink enable module1
+airlink select module2
+ airlink mode 11a+n+ac+ax
+ airlink channel auto bandwidth=80 primary=lower primary40=lower
+ airlink beacon dtim-period 1
+ airlink enable module2
+airlink select 1
+ airlink ssid (エンジニア用接続SSID)
+ airlink vlan-id 20
+ airlink bind module1 module2
+ airlink auth wpa2-eap aes
+ airlink radius auth on
+ airlink radius server 192.168.1.210
+ airlink radius secret (RADIUSシークレット文字列：自動生成)
+ airlink privacy separate station
+ airlink enable 1
+airlink select 2
+ airlink ssid (スタッフ用接続SSID)
+ airlink vlan-id 30
+ airlink bind module1 module2
+ airlink auth wpa2-eap aes
+ airlink radius auth on
+ airlink radius server 192.168.1.210
+ airlink radius secret (RADIUSシークレット文字列：自動生成)
+ airlink privacy separate station
+ airlink enable 2
+airlink select 3
+ airlink ssid (ゲスト用接続SSID)
+ airlink vlan-id 40
+ airlink bind module1 module2
+ airlink auth wpa3mixed-sae-psk aes
+ airlink psk-key (事前共有キー：必須)
+ airlink privacy separate station
+ airlink enable 3
+dns server 192.168.1.1
+radiusd use on
+radiusd reauth interval 43200
+radiusd client 192.168.1.0/24 (RADIUSシークレット文字列：自動生成)
+radiusd user (ユーザーID) (パスワード) ssid=(エンジニア用接続SSID) auth=peap usertype=wlx  ※必要に応じて複数登録
+radiusd user (ユーザーID) (パスワード) ssid=(スタッフ用接続SSID) auth=peap usertype=wlx  ※必要に応じて複数登録
+schedule at 1 startup * ntpdate ntp.nict.jp syslog
+schedule at 2 */* 05:30 * ntpdate ntp.nict.jp syslog
+schedule at 3 startup airlink module1 airlink channel change station-none wait-time=10
+schedule at 4 startup airlink module2 airlink channel change station-none wait-time=240
+schedule at 5 */* 03:01 airlink optimization apply
+wlan-controller select 1
+airlink optimization use on prefer-mode=general 03:00
+airlink select module1
+ airlink mode all
+ airlink channel auto bandwidth=40 primary=lower
+ airlink beacon dtim-period 1
+ airlink enable module1
+airlink select module2
+ airlink mode all
+ airlink channel auto bandwidth=80 primary=lower primary40=lower
+ airlink beacon dtim-period 1
+ airlink enable module2
+airlink select module3
+ airlink mode all
+ airlink channel auto bandwidth=80 primary=lower primary40=lower
+ airlink channel range 100 116 132
+ airlink channel range dfs 36
+ airlink beacon dtim-period 1
+ airlink enable module3
+airlink select 1
+ airlink ssid (エンジニア用接続SSID)
+ airlink vlan-id 20
+ airlink bind module1 module2
+ airlink auth wpa2-eap aes
+ airlink radius auth on
+ airlink radius server 127.0.0.1
+ airlink privacy separate station
+ airlink enable 1
+airlink select 2
+ airlink ssid (スタッフ用接続SSID)
+ airlink vlan-id 30
+ airlink bind module1 module2
+ airlink auth wpa2-eap aes
+ airlink radius auth on
+ airlink radius server 127.0.0.1
+ airlink privacy separate station
+ airlink enable 2
+airlink select 3
+ airlink ssid (ゲスト用接続SSID)
+ airlink vlan-id 40
+ airlink bind module1 module2
+ airlink auth wpa3mixed-sae-psk aes
+ airlink psk-key (事前共有キー：必須)
+ airlink privacy separate station
+ airlink enable 3
+wlan-controller select 1 1
+ wlan-controller member-ap (個別のMACアドレス：自動設定)
+ wlan-controller serial (個別のシリアル番号：自動設定)
+ wlan-controller system name (個別の機器名：自動設定)
+ wlan-controller ip address 192.168.1.201/24
+wlan-controller select 1 2
+ wlan-controller member-ap (個別のMACアドレス：自動設定)
+ wlan-controller serial (個別のシリアル番号：自動設定)
+ wlan-controller system name (個別の機器名：自動設定)
+ wlan-controller ip address 192.168.1.202/24
+wlan-controller select 1 3
+ wlan-controller member-ap (個別のMACアドレス：自動設定)
+ wlan-controller serial (個別のシリアル番号：自動設定)
+ wlan-controller system name (個別の機器名：自動設定)
+ wlan-controller ip address 192.168.1.203/24
+wlan-controller select 1 4
+ wlan-controller member-ap (個別のMACアドレス：自動設定)
+ wlan-controller serial (個別のシリアル番号：自動設定)
+ wlan-controller system name (個別の機器名：自動設定)
+ wlan-controller ip address 192.168.1.204/24
+cluster virtual-ip address 192.168.1.210/24
+#

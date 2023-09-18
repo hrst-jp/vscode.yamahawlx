@@ -6,22 +6,73 @@
             "include": "#comment"
         },
         {
-            "include": "#wlx-a"
+            "include": "#wlx-4-setup"
         },
         {
-            "include": "#wlx-c"
+            "include": "#wlx-5-lan"
         },
         {
-            "include": "#wlx-l"
+            "include": "#wlx-6-airlink"
         },
         {
-            "include": "#wlx-r"
+            "include": "#wlx-7-wlan-controller"
         },
         {
-            "include": "#wlx-v"
+            "include": "#wlx-8-schedule"
         },
         {
-            "include": "#wlx-w"
+            "include": "#wlx-9-radius_server"
+        },
+        {
+            "include": "#wlx-10-yno"
+        },
+        {
+            "include": "#wlx-11-operation"
+        },
+        {
+            "include": "#wlx-12-showconfig"
+        },
+        {
+            "include": "#wlx-13-showstatus"
+        },
+        {
+            "include": "#wlx-14-logging"
+        },
+        {
+            "include": "#wlx17-5-lan"
+        },
+        {
+            "include": "#wlx17-6.1-airlink"
+        },
+        {
+            "include": "#wlx17-6.2-airlink"
+        },
+        {
+            "include": "#wlx17-6.3-airlink"
+        },
+        {
+            "include": "#wlx17-6.4-airlink"
+        },
+        {
+            "include": "#wlx17-6.5-airlink"
+        },
+        {
+            "include": "#wlx17-7-wlan-controller"
+        },
+        {
+            "include": "#wlx17-8-snmp"
+        },
+        {
+            "include": "#wlx17-11-radius_server"
+        },
+        {
+            "include": "#wlx17-12-dhcp_server"
+        },
+        {
+            "include": "#keyword"
+        },
+        {
+            "include": "#mnemonic"
         }
     ],
     "repository": {
@@ -33,89 +84,274 @@
                 }
             ]
         },
-        "wlx-a": {
+        "keyword": {
             "patterns": [
                 {
-                    "match": "airlink configure refresh",
-                    "name": "entity.name.function"
-                },
-                {
-                    "match": "airlink (enable|select|disable) (all|module\\S|\\S+|none)",
-                    "name": "storage.type",
+                    "match": "\\b(\\S+)(!=|=)((([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(/(([1-2]?[0-9])|3[0-2]))?)\\b",
                     "captures": {
+                        "1": {
+                            "name": "variable.language"
+                        },
                         "2": {
-                            "name": "keyword.control"
+                            "name": "keyword.operator"
+                        },
+                        "3": {
+                            "name": "string"
                         }
                     }
                 },
                 {
-                    "match": "airlink emergency-mode",
+                    "match": "\\b(\\S+)(!=|=)(\\d+)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "variable.language"
+                        },
+                        "2": {
+                            "name": "keyword.operator"
+                        },
+                        "3": {
+                            "name": "constant.numeric"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(\\S+)(!=|=)(on|off)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "variable.language"
+                        },
+                        "2": {
+                            "name": "keyword.operator"
+                        },
+                        "3": {
+                            "name": "constant.language"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(\\S+)(!=|=)(\\S+)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "variable.language"
+                        },
+                        "2": {
+                            "name": "keyword.operator"
+                        },
+                        "3": {
+                            "name": "string"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(1000-fdx|(100|10)-(fdx|hdx))\\b",
+                    "name": "constant.language",
+                    "comment": "speed"
+                },
+                {
+                    "match": "\\b(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(/(([1-2]?[0-9])|3[0-2]))?\\b",
+                    "name": "string",
+                    "comment": "IPv4 Address"
+                },
+                {
+                    "match": "\\b([0-9a-f]{0,4}:){7}[0-9a-f]{0,4}(%\\S+|(/(12[0-8]|1([0-1]|[39]){2}|[1-9]?[0-9])))?\\b",
+                    "name": "string",
+                    "comment": "IPv6 Address省略なし"
+                },
+                {
+                    "match": "\\b([0-9a-f]{0,4}:){3}(:|[0-9a-f]{0,4})?(:[0-9a-f]{0,4}){0,4}(%\\S+|(/(12[0-8]|1([0-1]|[39]){2}|[1-9]?[0-9])))?\\b",
+                    "name": "string",
+                    "comment": "IPv6 Address省略あり48bitマスク以上"
+                },
+                {
+                    "match": "\\b(dhcp|ra)-prefix@lan([0-9a-f:]+)(%\\S+)?(/(12[0-8]|1([0-1]|[39]){2}|[1-9]?[0-9]))?\\b",
+                    "name": "string",
+                    "comment": "IPv6 プレフィックス表記"
+                },
+                {
+                    "match": "\\b(([0-9a-fA-F]{2}(:|-)){5}[0-9a-fA-F]{2})\\b",
+                    "name": "string",
+                    "comment": "MACアドレス"
+                },
+                {
+                    "match": "\\b(lan\\d:\\d)\\b",
+                    "name": "constant.language",
+                    "comment": "LANポート"
+                },
+                {
+                    "match": "\\b(lag1)\\b",
+                    "name": "constant.language",
+                    "comment": "その他インターフェース"
+                },
+                {
+                    "match": "\\b(module\\d)\\b",
+                    "name": "constant.language",
+                    "comment": "airlink_num"
+                },
+                {
+                    "match": "\\b(11(a|b)(\\+g|\\+n|\\+ac|\\+ax)*)\\b",
+                    "name": "constant.language",
+                    "comment": "airlink_num"
+                },
+                {
+                    "match": "\\b(w52|w53|w56)\\b",
+                    "name": "constant.language",
+                    "comment": "airlink_channel"
+                },
+                {
+                    "match": "\\b(open(-eopen)?|eopen|shared|wpa-psk|wpa2-psk|wpa3-sae|wpa-eap|wpa2-eap|wpa3-eap|wpa2mixed-eap|wpa2mixed-psk|wpa3mixed-sae-psk)\\b",
+                    "name": "constant.language",
+                    "comment": "airlink_auth"
+                },
+                {
+                    "match": "\\b(wwep|aes(-gcm-256)?|mixed)\\b",
+                    "name": "constant.language",
+                    "comment": "airlink_crypt"
+                },
+                {
+                    "match": "\\b(auto|dhcp|on|off|in|out|only|none|hide|weight|static|deny|permit|call-only|arrive-only)\\b",
+                    "name": "constant.language",
+                    "comment": "スイッチ"
+                },
+                {
+                    "match": "\\b(any|join|hybrid)\\b",
+                    "name": "constant.language",
+                    "comment": ""
+                },
+                {
+                    "match": "\\b(pap|chap|mschap(-v2)?)\\b",
+                    "name": "constant.language",
+                    "comment": "認証方式"
+                },
+                {
+                    "match": "\\b((md5|sha)-hmac|sha(256|384|512)-hmac|(aes(256)?|(3)?des)-cbc)\\b",
+                    "name": "constant.language",
+                    "comment": "認証・暗号アルゴリズム"
+                },
+                {
+                    "match": "\\b(myname|clid|mscbcp)\\b",
+                    "name": "constant.language",
+                    "comment": "pp auth キーワード"
+                },
+                {
+                    "match": "\\b(pass|reject|restrict)(-log|-nolog)?\\b",
+                    "name": "constant.language",
+                    "comment": "pass_reject"
+                },
+                {
+                    "match": "\\b(([0-1][0-9]|2[0-3]):[0-5][0-9])\\b",
+                    "name": "constant.numeric",
+                    "comment": "時間"
+                },
+                {
+                    "match": "\\b(\\d+)\\b",
+                    "name": "constant.numeric",
+                    "comment": "数字"
+                }
+            ]
+        },
+        "mnemonic": {
+            "comment": "http://www.rtpro.yamaha.co.jp/RT/docs/misc/mnemonic.html",
+            "patterns": [
+                {
+                    "match": "\\b(ah|at_(3|5|7|8|echo|nbp|rtmp|zis)|auditd|bgp|biff|chargen|daytime|dhcp(c|s|v6c|v6s)|discard|dns|domain|doom)\\b",
+                    "name": "constant.language",
+                    "comment": "ニーモニック"
+                },
+                {
+                    "match": "\\b(echo|esp|established|exec|finger|ftp(data)?|gopher|gre|http(s)?|icmp(6|-error|-info)?|ident|ike|imap(2|3)?|ipmpv6|ipsec-nat-t|ipv6|irc)\\b",
+                    "name": "constant.language",
+                    "comment": "ニーモニック"
+                },
+                {
+                    "match": "\\b(kerberos|l2tp|ldap|login|mobileip_agent|mobilip_mn|msblast|ms-(ds|rpc|sql)|nameserver|netbios_(dgm|ns|ssn)|netmeeting|netware_ip|nfs|nntp|ntp)\\b",
+                    "name": "constant.language",
+                    "comment": "ニーモニック"
+                },
+                {
+                    "match": "\\b(ospf|pim|ping(6)?|pop(2|3)|pptp|printer|radius|rip(ng)?|rje|rlogin|route|rsh|rsvp|rwho)\\b",
+                    "name": "constant.language",
+                    "comment": "ニーモニック"
+                },
+                {
+                    "match": "\\b(sip|smtp|snmp(trap)?|ssh|submission|sunrpc|syslog|systat|tacacs_ds|talk|tcp(fin|mux|rst|syn)?|telnet|tftp|timbuktu|time|udp|uucp|who(is)?|www)\\b",
+                    "name": "constant.language",
+                    "comment": "ニーモニック"
+                }
+            ]
+        },
+        "wlx-4-setup": {
+            "patterns": [
+                {
+                    "comment": "4.1",
+                    "match": "^\\s*administrator password encrypted",
                     "name": "entity.name.function"
                 },
                 {
-                    "match": "airlink (mode|channel|beacon)",
+                    "comment": "4.2",
+                    "match": "^\\s*ntpdate",
                     "name": "entity.name.function"
                 },
                 {
-                    "match": "airlink optimization use",
+                    "comment": "4.3",
+                    "match": "^\\s*telnetd service",
                     "name": "entity.name.function"
                 },
                 {
-                    "match": "airlink macaddress filter list",
+                    "comment": "4.4",
+                    "match": "^\\s*telnetd host",
                     "name": "entity.name.function"
                 },
                 {
-                    "match": "airlink macaddress filter use",
+                    "comment": "4.5",
+                    "match": "^\\s*login timer",
                     "name": "entity.name.function"
                 },
                 {
-                    "match": "airlink (ssid|vlan-id|bind|auth|radius (auth|server|secret)|psk-key|privacy)",
+                    "comment": "4.6",
+                    "match": "^\\s*thtp host",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "4.7",
+                    "match": "^\\s*http revision-up url",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "4.8",
+                    "match": "^\\s*system name",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "4.9",
+                    "match": "^\\s*system location",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "4.10",
+                    "match": "^\\s*httpd host",
                     "name": "entity.name.function"
                 }
             ]
         },
-        "wlx-c": {
+        "wlx-5-lan": {
             "patterns": [
                 {
-                    "match": "cluster config-id",
-                    "name": "entity.name.function"
-                },
-                {
-                    "match": "cluster cluster-mode (auto-cluster|standalone)",
+                    "comment": "5.1",
+                    "match": "^\\s*vlan-id (\\d+) (\\d+)",
                     "name": "entity.name.function",
                     "captures": {
                         "1": {
-                            "name": "keyword.control"
+                            "name": "constant.numeric"
+                        },
+                        "2": {
+                            "name": "constant.numeric"
                         }
                     }
                 },
                 {
-                    "match": "cluster virtual-ip address",
-                    "name": "entity.name.function"
-                }
-            ]
-        },
-        "wlx-l": {
-            "patterns": [
-                {
-                    "match": "led blink",
-                    "name": "entity.name.function"
-                }
-            ]
-        },
-        "wlx-r": {
-            "patterns": [
-                {
-                    "match": "radiusd (use|reauth|client|user)",
-                    "name": "entity.name.function"
-                }
-            ]
-        },
-        "wlx-v": {
-            "patterns": [
-                {
-                    "match": "vlan-access (\\S+) (\\d+)",
-                    "name": "support.function",
+                    "comment": "5.2",
+                    "match": "^\\s*vlan-access (\\S+) (\\d+)",
+                    "name": "entity.name.function",
                     "captures": {
                         "1": {
                             "name": "variable.language"
@@ -126,24 +362,9 @@
                     }
                 },
                 {
-                    "match": "vlan-id (\\d+) (\\d+)",
-                    "name": "support.function",
-                    "captures": {
-                        "1": {
-                            "name": "constant.numeric"
-                        },
-                        "2": {
-                            "name": "constant.numeric"
-                        }
-                    }
-                },
-                {
-                    "match": "vlan-port-mode",
-                    "name": "support.function"
-                },
-                {
-                    "match": "vlan-trunk (\\S+) (\\d+) (join|leave)",
-                    "name": "support.function",
+                    "comment": "5.3",
+                    "match": "^\\s*vlan-trunk (\\S+) (\\d+) (join|leave)",
+                    "name": "entity.name.function",
                     "captures": {
                         "1": {
                             "name": "variable.language"
@@ -155,22 +376,1042 @@
                             "name": "variable.language"
                         }
                     }
+                },
+                {
+                    "comment": "5.4",
+                    "match": "^\\s*ip vlan-id",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "5.5",
+                    "match": "^\\s*ip route default gateway",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "5.6, 5.7",
+                    "match": "^\\s*dns server( dhcp)?",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "5.8",
+                    "match": "^\\s*ip http-client proxy",
+                    "name": "entity.name.function"
                 }
             ]
         },
-        "wlx-w": {
+        "wlx-6-airlink": {
             "patterns": [
                 {
-                    "match": "wlan-controller config set",
-                    "name": "support.function"
+                    "comment": "6.1.1",
+                    "match": "^\\s*airlink select",
+                    "name": "entity.name.function"
                 },
                 {
-                    "match": "wlan-controller select",
+                    "comment": "6.1.2",
+                    "match": "^\\s*airlink enable",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.1.3",
+                    "match": "^\\s*airlink disable",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.1.4",
+                    "match": "^\\s*airlink emergency-mode",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.1",
+                    "match": "^\\s*airlink configure refresh",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.2",
+                    "match": "^\\s*show status airlink module",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.3",
+                    "match": "^\\s*show status airlink transmit power",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.4",
+                    "match": "^\\s*show status airlink wmm",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.5",
+                    "match": "^\\s*show status airlink wds",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.6",
+                    "match": "^\\s*show airlink station list",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.7",
+                    "match": "^\\s*show status airlink ip track",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx-7-wlan-controller": {
+            "patterns": [
+                {
+                    "comment": "7.1, 7.2",
+                    "match": "^\\s*show status wlan-controller ap list( member)?",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.3",
+                    "match": "^\\s*wlan-controller config set",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.4",
+                    "match": "^\\s*cluster virtual-ip address",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.5",
+                    "match": "^\\s*show status cluster",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.6",
+                    "match": "^\\s*cluster cluster-mode",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx-8-schedule": {
+            "patterns": [
+                {
+                    "comment": "8.1",
+                    "match": "^\\s*schedule at",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx-9-radius_server": {
+            "patterns": [
+                {
+                    "comment": "9.1",
+                    "match": "^\\s*show status radiusd certificate",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "9.2",
+                    "match": "^\\s*show status radiusd user",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "9.3",
+                    "match": "^\\s*show status radiusd revoke list",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx-10-yno": {
+            "patterns": [
+                {
+                    "comment": "10.1",
+                    "match": "^\\s*show status yno",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx-11-operation": {
+            "patterns": [
+                {
+                    "comment": "11.1.1",
+                    "match": "^\\s*administrator",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.1.2",
+                    "match": "^\\s*(quit|exec)",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.1.3",
+                    "match": "^\\s*save",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.1.4",
+                    "match": "^\\s*restart",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.1.5",
+                    "match": "^\\s*cold start",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.2.1",
+                    "match": "^\\s*clear log",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.3.1",
+                    "match": "^\\s*ping",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.3.2",
+                    "match": "^\\s*arping",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.3.3",
+                    "match": "^\\s*traceroute",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.3.4",
+                    "match": "^\\s*nslookup",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.3.5",
+                    "match": "^\\s*http revision-up go",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.3.6",
+                    "match": "^\\s*led blink",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx-12-showconfig": {
+            "patterns": [
+                {
+                    "comment": "12.1",
+                    "match": "^\\s*show environment",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "12.2, 12.3",
+                    "match": "^\\s*show config( optimization)?",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx-13-showstatus": {
+            "patterns": [
+                {
+                    "comment": "13.1",
+                    "match": "^\\s*show arp",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "13.2",
+                    "match": "^\\s*show status (lan\\s+)",
+                    "name": "entity.name.function",
+                    "captures": {
+                        "1": {
+                            "name": "constant.language"
+                        }
+                    }
+                },
+                {
+                    "comment": "13.3, 13.4",
+                    "match": "^\\s*show status dhcp(c)?",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "13.5",
+                    "match": "^\\s*show status vlan (\\d+)",
+                    "name": "storage.type",
+                    "captures": {
+                        "1": {
+                            "name": "constant.numeric"
+                        }
+                    }
+                },
+                {
+                    "comment": "13.6",
+                    "match": "^\\s*show techinfo",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "13.7",
+                    "match": "^\\s*show status boot (\\d+)",
+                    "name": "storage.type",
+                    "captures": {
+                        "1": {
+                            "name": "constant.numeric"
+                        }
+                    }
+                },
+                {
+                    "comment": "13.8",
+                    "match": "^\\s*show status boot all",
                     "name": "storage.type"
                 },
                 {
-                    "match": "wlan-controller (member-ap|serial|system name|ip address)",
-                    "name": "support.function"
+                    "comment": "13.9",
+                    "match": "^\\s*show status boot list",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx-14-logging": {
+            "patterns": [
+                {
+                    "comment": "14.1",
+                    "match": "^\\s*show log",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx17-5-lan": {
+            "patterns": [
+                {
+                    "comment": "5.2",
+                    "match": "^\\s*vlan-port-mode",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "5.9",
+                    "match": "^\\s*lan type lan1",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "5.10",
+                    "match": "^\\s*link-aggregation port lag1",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "5.11",
+                    "match": "^\\s*link-aggregation kind lag1",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx17-6.1-airlink": {
+            "patterns": [
+                {
+                    "comment": "6.1.1",
+                    "match": "^\\s*airlink select",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.1.2",
+                    "match": "^\\s*airlink enable",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.1.3",
+                    "match": "^\\s*airlink disable",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.1.4",
+                    "match": "^\\s*airlink mode",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.1.5",
+                    "match": "^\\s*airlink channel",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.1.6",
+                    "match": "^\\s*airlink channel range",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.1.7",
+                    "match": "^\\s*airlink channel range dfs",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.1.8",
+                    "match": "^\\s*airlink ate use",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.1.9",
+                    "match": "^\\s*airlink emergency-mode",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.1.10",
+                    "match": "^\\s*airlink operation mode",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx17-6.2-airlink": {
+            "patterns": [
+                {
+                    "comment": "6.2.1",
+                    "match": "^\\s*airlink short-guard-interval",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.2",
+                    "match": "^\\s*airlink protection",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.3",
+                    "match": "^\\s*airlink beacon period",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.4",
+                    "match": "^\\s*airlink beacon dtim-period",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.5",
+                    "match": "^\\s*airlink rts threshold",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.6",
+                    "match": "^\\s*airlink max client",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.7",
+                    "match": "^\\s*airlink transmit power level",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.8",
+                    "match": "^\\s*airlink wmm use",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.9",
+                    "match": "^\\s*airlink wmm",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.10",
+                    "match": "^\\s*airlink multicast transmit rate",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.11",
+                    "match": "^\\s*airlink unicast transmit rate series",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.12",
+                    "match": "^\\s*airlink receive rate",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.13",
+                    "match": "^\\s*airlink receive rate basic",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.14",
+                    "match": "^\\s*airlink short-preamble use",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.15",
+                    "match": "^\\s*airlink a-msdu use",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.16",
+                    "match": "^\\s*airlink a-mpdu use",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.17",
+                    "match": "^\\s*airlink log",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.18",
+                    "match": "^\\s*airlink visualization use",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.19",
+                    "match": "^\\s*airlink basel use",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.20",
+                    "match": "^\\s*airlink ip track",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.21",
+                    "match": "^\\s*airlink inactivity timer",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.2.22",
+                    "match": "^\\s*airlink basel policy",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx17-6.3-airlink": {
+            "patterns": [
+                {
+                    "comment": "6.3.1",
+                    "match": "^\\s*airlink ssid",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.2",
+                    "match": "^\\s*airlink vlan-id",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.3",
+                    "match": "^\\s*airlink bind",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.4",
+                    "match": "^\\s*airlink auth",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.5",
+                    "match": "^\\s*airlink auth-mac",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.6, 6.3.7, 6.3.8",
+                    "match": "^\\s*airlink wep-key( (size|transmit))?",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.9",
+                    "match": "^\\s*airlink broadcast-key interval",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.10",
+                    "match": "^\\s*airlink psk-key",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.11",
+                    "match": "^\\s*airlink privacy separate",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.12",
+                    "match": "^\\s*airlink stealth",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.13",
+                    "match": "^\\s*airlink wpa2 pre-auth",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.14",
+                    "match": "^\\s*airlink wpa3 pre-auth",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.15",
+                    "match": "^\\s*airlink dhcp",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.16",
+                    "match": "^\\s*airlink macaddress filter use",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.17",
+                    "match": "^\\s*airlink macaddress filter list",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.18",
+                    "match": "^\\s*airlink vap mode",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.19",
+                    "match": "^\\s*airlink wds peer",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.20",
+                    "match": "^\\s*airlink pmf",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.21",
+                    "match": "^\\s*airlink band-steering use",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.22",
+                    "match": "^\\s*airlink cce use",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.3.23",
+                    "match": "^\\s*airlink vap enable condition",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx17-6.4-airlink": {
+            "patterns": [
+                {
+                    "comment": "6.4.1, 6.4.4",
+                    "match": "^\\s*airlink radius auth( port)?",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.4.2, 6.4.5, 6.4.7",
+                    "match": "^\\s*airlink radius account( (port|update interval))?",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.4.3",
+                    "match": "^\\s*airlink radius server",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.4.6",
+                    "match": "^\\s*airlink radius secret",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.4.8, 6.4.11",
+                    "match": "^\\s*airlink radius secondary auth( port)?",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.4.9, 6.4.12",
+                    "match": "^\\s*airlink radius secondary account( port)?",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.4.10",
+                    "match": "^\\s*airlink radius secondary server",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.4.13",
+                    "match": "^\\s*airlink radius secondary secret",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.4.14",
+                    "match": "^\\s*airlink radius failback timer",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx17-6.5-airlink": {
+            "patterns": [
+                {
+                    "comment": "6.5.1",
+                    "match": "^\\s*airlink configure refresh",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.5.2",
+                    "match": "^\\s*show status airlink module",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.5.3",
+                    "match": "^\\s*airlink channel change",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.5.4",
+                    "match": "^\\s*clear airlink channel history",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.5.5",
+                    "match": "^\\s*show status airlink channel history",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.5.6",
+                    "match": "^\\s*airlink transmit power adjust",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.5.7",
+                    "match": "^\\s*show status airlink transmit power",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.5.8",
+                    "match": "^\\s*show status airlink wmm",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.5.9",
+                    "match": "^\\s*show status airlink wds",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.5.10",
+                    "match": "^\\s*show airlink station list",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.5.11",
+                    "match": "^\\s*clear airlink macaddress filter list",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.5.12",
+                    "match": "^\\s*airlink channel coordination",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.5.13",
+                    "match": "^\\s*airlink channel clear history",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.5.14",
+                    "match": "^\\s*airlink transmit power coordination",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "6.5.15",
+                    "match": "^\\s*show status airlink ip track",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx17-7-wlan-controller": {
+            "patterns": [
+                {
+                    "comment": "7.1",
+                    "match": "^\\s*wlan-controller role",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.2",
+                    "match": "^\\s*wlan-controller host",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.3",
+                    "match": "^\\s*show status wlan-controller ap list",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.4",
+                    "match": "^\\s*show status wlan-controller ap list member",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.5",
+                    "match": "^\\s*wlan-controller select",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.6",
+                    "match": "^\\s*wlan-controller member-ap",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.7",
+                    "match": "^\\s*wlan-controller member-ap lock",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.8",
+                    "match": "^\\s*wlan-controller substitute controller-ap",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.9",
+                    "match": "^\\s*wlan-controller system name",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.10",
+                    "match": "^\\s*wlan-controller system location",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.11",
+                    "match": "^\\s*wlan-controller ip address",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.12",
+                    "match": "^\\s*wlan-controller channel",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.13",
+                    "match": "^\\s*wlan-controller transmit power level",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.14",
+                    "match": "^\\s*wlan-controller management vlan",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.15",
+                    "match": "^\\s*wlan-controller config set",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.16",
+                    "match": "^\\s*wlan-controller config set",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.17",
+                    "match": "^\\s*wlan-controller log port",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.18",
+                    "match": "^\\s*wlan-controller host ip address",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.19",
+                    "match": "^\\s*wlan-controller l2ms restriction",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.20",
+                    "match": "^\\s*wlan-controller bind vlan",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.21",
+                    "match": "^\\s*wlan-controller promote controller-ap",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.22",
+                    "match": "^\\s*wlan-controller revert controller-ap",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.23",
+                    "match": "^\\s*wlan-controller auto-switch sub-controller use",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.24",
+                    "match": "^\\s*airlink auto-cell-recover use",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.25",
+                    "match": "^\\s*wlan-controller auto-cell-recover support-ap",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.26",
+                    "match": "^\\s*show status wlan-controller auto-cell-recover support-ap",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.27",
+                    "match": "^\\s*wlan-controller radiusd synchronization",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.28",
+                    "match": "^\\s*show status wlan-controller radiusd synchronization",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.29",
+                    "match": "^\\s*wlan-controller console prompt",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.30",
+                    "match": "^\\s*wlan-controller name",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.31",
+                    "match": "^\\s*wlan-controller model name",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "7.32",
+                    "match": "^\\s*wlan-controller config model",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx17-8-snmp": {
+            "patterns": [
+                {
+                    "comment": "8.1",
+                    "match": "^\\s*snmp host",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "8.2",
+                    "match": "^\\s*snmp community read-only",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "8.3",
+                    "match": "^\\s*snmp community read-write",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "8.4",
+                    "match": "^\\s*snmp trap host",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "8.5",
+                    "match": "^\\s*snmp trap community",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "8.6",
+                    "match": "^\\s*snmp syscontact",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "8.7",
+                    "match": "^\\s*snmp syslocation",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "8.8",
+                    "match": "^\\s*snmp sysname",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "8.9",
+                    "match": "^\\s*snmp trap enable snmp",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "8.10",
+                    "match": "^\\s*snmp trap send linkdown",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx17-11-radius_server": {
+            "patterns": [
+                {
+                    "comment": "11.1",
+                    "match": "^\\s*radiusd use ",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.2",
+                    "match": "^\\s*radiusd port",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.3",
+                    "match": "^\\s*radiusd client",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.4",
+                    "match": "^\\s*radiusd client auto auth",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.5",
+                    "match": "^\\s*radiusd user",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.6",
+                    "match": "^\\s*radiusd reauth interval",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.7",
+                    "match": "^\\s*certificate generate ca",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.8",
+                    "match": "^\\s*radiusd configure refresh ",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.9",
+                    "match": "^\\s*radiusd certificate ",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.10",
+                    "match": "^\\s*radiusd cancel make-cert",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.11",
+                    "match": "^\\s*radiusd revoke",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.12",
+                    "match": "^\\s*show status radiusd certificate",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.13",
+                    "match": "^\\s*show status radiusd user",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "11.14",
+                    "match": "^\\s*show status radiusd revoke list",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx17-12-dhcp_server": {
+            "patterns": [
+                {
+                    "comment": "12.1",
+                    "match": "^\\s*dhcp service",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "12.2",
+                    "match": "^\\s*dhcp duplicate check",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "12.3, 12.4",
+                    "match": "^\\s*dhcp scope( bind)?",
+                    "name": "entity.name.function"
+                },
+                {
+                    "comment": "12.5",
+                    "match": "^\\s*dhcp relay server",
+                    "name": "entity.name.function"
                 }
             ]
         }

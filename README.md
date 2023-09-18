@@ -1,5 +1,5 @@
 # yamaha-WLX README
-YAMAHA ルーターの設定ファイルをハイライト表示します。
+YAMAHA 無線LANアクセスポイントの設定ファイルをハイライト表示します。
 
 # お知らせ
 * 設定の区切りなどを強調するため、同じ文字でも色がつかない場合があります。
@@ -12,11 +12,13 @@ Show Configで表示された結果をコメントを含め保存して下さい
 拡張子は ".wlx"を指定しています。
 
 # 現在の対応製品
-WLX  
+WLX222 Rev.24系  
+WLX402 Rev.17系  
 
-#その他
+#その他シリーズ
 * [YAMAHA Router series](https://marketplace.visualstudio.com/items?itemName=hrst.yamaha-rt)
 * [YAMAHA SWX series](https://marketplace.visualstudio.com/items?itemName=hrst.yamaha-swx)
+* [YAMAHA WLX series](https://marketplace.visualstudio.com/items?itemName=hrst.yamaha-wlx)
 
 
 # 参考資料
@@ -25,4 +27,4 @@ WLX
 * [RTシリーズのマニュアル](http://www.rtpro.yamaha.co.jp/RT/manual.html)
 
 # ソース
-* [GitHub](https://github.com/hrst-jp/vscode.yamahart)
+* [GitHub](https://github.com/hrst-jp/vscode.yamahawlx)
