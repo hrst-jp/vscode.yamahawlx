@@ -39,6 +39,9 @@
             "include": "#wlx-14-logging"
         },
         {
+            "include": "#wlx-add"
+        },
+        {
             "include": "#wlx17-5-lan"
         },
         {
@@ -404,7 +407,7 @@
                 {
                     "comment": "6.1.1",
                     "match": "^\\s*airlink select",
-                    "name": "entity.name.function"
+                    "name": "storage"
                 },
                 {
                     "comment": "6.1.2",
@@ -666,6 +669,18 @@
                 {
                     "comment": "14.1",
                     "match": "^\\s*show log",
+                    "name": "entity.name.function"
+                }
+            ]
+        },
+        "wlx-add": {
+            "patterns": [
+                {
+                    "match": "^\\s*airlink optimization use",
+                    "name": "entity.name.function"
+                },
+                {
+                    "match": "^\\s*wlan-controller serial",
                     "name": "entity.name.function"
                 }
             ]
@@ -1124,7 +1139,7 @@
                 {
                     "comment": "7.5",
                     "match": "^\\s*wlan-controller select",
-                    "name": "entity.name.function"
+                    "name": "storage"
                 },
                 {
                     "comment": "7.6",

@@ -14,6 +14,7 @@ Show Configで表示された結果をコメントを含め保存して下さい
 # 現在の対応製品
 WLX222 Rev.24系  
 WLX402 Rev.17系  
+GUI設定後に記録されるコマンド類（随時対応）  
 
 #その他シリーズ
 * [YAMAHA Router series](https://marketplace.visualstudio.com/items?itemName=hrst.yamaha-rt)
