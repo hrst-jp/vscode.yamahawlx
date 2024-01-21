@@ -2,7 +2,7 @@
   "name": "yamaha-wlx",
   "displayName": "YAMAHA WLX series",
   "description": "Highlight the configuration file of YAMAHA WLX product.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "hrst",
   "icon": "images/wlx413_icon.png",
   "engines": {

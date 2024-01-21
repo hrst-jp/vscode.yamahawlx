@@ -1282,27 +1282,27 @@
             "patterns": [
                 {
                     "comment": "8.1",
-                    "match": "^\\s*snmp host",
+                    "match": "^\\s*snmp(v2c|v3)? host",
                     "name": "entity.name.function"
                 },
                 {
                     "comment": "8.2",
-                    "match": "^\\s*snmp community read-only",
+                    "match": "^\\s*snmp(v2c)? community read-only",
                     "name": "entity.name.function"
                 },
                 {
                     "comment": "8.3",
-                    "match": "^\\s*snmp community read-write",
+                    "match": "^\\s*snmp(v2c)? community read-write",
                     "name": "entity.name.function"
                 },
                 {
                     "comment": "8.4",
-                    "match": "^\\s*snmp trap host",
+                    "match": "^\\s*snmp(v2c|v3)? trap host",
                     "name": "entity.name.function"
                 },
                 {
                     "comment": "8.5",
-                    "match": "^\\s*snmp trap community",
+                    "match": "^\\s*snmp(v2c)? trap community",
                     "name": "entity.name.function"
                 },
                 {
